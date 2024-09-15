@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AuthorsList from './components/Authors/AuthorsList';
 import GenreList from './components/Genre/GenreList';
+import PublishersList from './components/Publishers/PublishersList';
 import './index.css';
 import Layout from './pages/Layout/Layout';
 
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
 			{
 				path: 'genres',
 				element: <GenreList />
+			},
+			{
+				path: 'publishers',
+				element: <PublishersList />
 			}
 		]
 	}
