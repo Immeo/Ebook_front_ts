@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AuthorsList from './components/Authors/AuthorsList';
 import BookList from './components/Books/BookList';
 import BooksByAuthor from './components/Books/BooksByAuthor/BooksByAuthor';
+import BooksByGenre from './components/Books/BooksByGenre/BooksByGenre.';
 import GenreList from './components/Genre/GenreList';
 import PublishersList from './components/Publishers/PublishersList';
 import './index.css';
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
 			{
 				path: 'genres',
 				element: <GenreList />
+			},
+			{
+				path: 'genres/:slug',
+				element: <BooksByGenre />
 			},
 			{
 				path: 'publishers',
