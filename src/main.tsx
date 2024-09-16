@@ -5,6 +5,7 @@ import AuthorsList from './components/Authors/AuthorsList';
 import BookList from './components/Books/BookList';
 import BooksByAuthor from './components/Books/BooksByAuthor/BooksByAuthor';
 import BooksByGenre from './components/Books/BooksByGenre/BooksByGenre.';
+import BooksPublishers from './components/Books/BooksPublishers/BooksPublishers';
 import GenreList from './components/Genre/GenreList';
 import PublishersList from './components/Publishers/PublishersList';
 import './index.css';
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
 			{
 				path: 'publishers',
 				element: <PublishersList />
+			},
+			{
+				path: 'publishers/:slug',
+				element: <BooksPublishers />
 			},
 			{
 				path: 'books',
