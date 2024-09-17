@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AuthorsList from './components/Authors/AuthorsList';
+import BookDetalis from './components/Books/BookDetais/BookDetalis';
 import BookList from './components/Books/BookList';
 import BooksByAuthor from './components/Books/BooksByAuthor/BooksByAuthor';
 import BooksByGenre from './components/Books/BooksByGenre/BooksByGenre.';
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
 			{
 				path: 'books',
 				element: <BookList />
+			},
+			{
+				path: 'book/:slug',
+				element: <BookDetalis />
 			}
 		]
 	}

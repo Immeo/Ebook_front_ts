@@ -59,8 +59,6 @@ const Rating: React.FC<IRatingProps> = ({
 }) => {
 	const [hoverValue, setHoverValue] = useState<number | undefined>(undefined);
 
-	console.log(value);
-
 	const onMouseMoves = (index: number) => {
 		if (!edit) {
 			return;

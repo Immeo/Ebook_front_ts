@@ -3,12 +3,12 @@ import { IGrenre } from '../../Genre/GenreCard/IIGenresCard.props';
 import { IPublishers } from '../../Publishers/PublishersCard/IPublishers.props';
 
 export interface IBookCardProps {
-	data: IBokokProps[];
+	data: IBookProps[];
 	error: string | null;
 	isLoadingData: boolean;
 }
 
-export interface IBokokProps {
+export interface IBookProps {
 	title_books: string;
 	author_books: IAuthor;
 	genre_books: IGrenre;
