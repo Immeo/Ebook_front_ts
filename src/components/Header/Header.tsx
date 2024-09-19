@@ -1,7 +1,11 @@
 import { memo, useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import { IHeaderProps } from './Header.props';
 
-const Header = memo(function Header() {
+const Header = memo(function Header({
+	setIsOpenModalAuth,
+	isOpenModalAuth
+}: IHeaderProps) {
 	const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
 	const location = useLocation();
 
@@ -10,7 +14,7 @@ const Header = memo(function Header() {
 	}, [location.pathname]);
 
 	return (
-		<header className='flex flex-row justify-between'>
+		<header className='flex flex-row justify-around items-center '>
 			<div className='flex w-2/12 items-center justify-start'>
 				<NavLink to='/'>
 					<img
@@ -24,7 +28,7 @@ const Header = memo(function Header() {
 			</div>
 			<div className='flex w-5/12 items-center justify-start'>
 				<nav>
-					<ul className='flex items-center justify-center gap-20'>
+					<ul className='flex items-center justify-center gap-10 text-lg w-24'>
 						<li>
 							<NavLink
 								className='translate-x-1 cursor-pointer text-2xl text-main-color duration-100 hover:text-hover-main-color'
@@ -90,6 +94,15 @@ const Header = memo(function Header() {
 						</li>
 					</ul>
 				</nav>
+			</div>
+			<div className='items-center'>
+				<button
+					type='button'
+					onClick={() => setIsOpenModalAuth(!isOpenModalAuth)}
+					className='translate-x-1 cursor-pointer text-2xl text-main-color duration-100 hover:text-hover-main-color'
+				>
+					Вход/Регистрация
+				</button>
 			</div>
 		</header>
 	);
