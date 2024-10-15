@@ -1,5 +1,9 @@
 import { memo, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
+import { logout } from '../../store/auth.slice';
+import { AppDispatch } from '../../store/store';
+import { clearUserInfo, selectUserName } from '../../store/user.slice';
 import { IHeaderProps } from './Header.props';
 
 const Header = memo(function Header({
@@ -8,14 +12,21 @@ const Header = memo(function Header({
 }: IHeaderProps) {
 	const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
 	const location = useLocation();
+	const userName = useSelector(selectUserName);
+	const dispatch = useDispatch<AppDispatch>();
+
+	const onLogout = () => {
+		dispatch(logout());
+		dispatch(clearUserInfo());
+	};
 
 	useEffect(() => {
 		setIsOpenMenu(false);
-	}, [location.pathname]);
+	}, [location.pathname, dispatch]);
 
 	return (
-		<header className='flex flex-row justify-around items-center '>
-			<div className='flex w-2/12 items-center justify-start'>
+		<header className='flex flex-row justify-around items-center sm: text-lg'>
+			<div className='flex w-2/12 items-center justify-start '>
 				<NavLink to='/'>
 					<img
 						src='/logo.svg'
@@ -25,8 +36,11 @@ const Header = memo(function Header({
 						className='cursor-pointer'
 					/>
 				</NavLink>
+				<p className='text-base text-main-color'>
+					{userName ? `Привет, ${userName}` : 'Привет, гость'}
+				</p>
 			</div>
-			<div className='flex w-5/12 items-center justify-start'>
+			<div className='flex  items-center justify-start'>
 				<nav>
 					<ul className='flex items-center justify-center gap-10 text-lg w-24'>
 						<li>
@@ -96,13 +110,23 @@ const Header = memo(function Header({
 				</nav>
 			</div>
 			<div className='items-center'>
-				<button
-					type='button'
-					onClick={() => setIsOpenModalAuth(!isOpenModalAuth)}
-					className='translate-x-1 cursor-pointer text-2xl text-main-color duration-100 hover:text-hover-main-color'
-				>
-					Вход/Регистрация
-				</button>
+				{!userName ? (
+					<button
+						type='button'
+						onClick={() => setIsOpenModalAuth(!isOpenModalAuth)}
+						className='translate-x-1 cursor-pointer text-2xl text-main-color duration-100 hover:text-hover-main-color'
+					>
+						Вход/Регистрация
+					</button>
+				) : (
+					<button
+						type='submit'
+						onClick={onLogout}
+						className='translate-x-1 cursor-pointer text-2xl text-main-color duration-100 hover:text-hover-main-color'
+					>
+						Выход
+					</button>
+				)}
 			</div>
 		</header>
 	);

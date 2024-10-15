@@ -1,5 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AuthorsList from './components/Authors/AuthorsList';
 import BookDetalis from './components/Books/BookDetais/BookDetalis';
@@ -10,13 +11,19 @@ import BooksPublishers from './components/Books/BooksPublishers/BooksPublishers'
 import GenreList from './components/Genre/GenreList';
 import PublishersList from './components/Publishers/PublishersList';
 import './index.css';
+import ConfirmCode from './pages/Auth/ConfirmCode';
 import Layout from './pages/Layout/Layout';
+import { store } from './store/store';
 
 const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <Layout />,
 		children: [
+			{
+				path: '/activate',
+				element: <ConfirmCode />
+			},
 			{
 				path: 'authors',
 				element: <AuthorsList />
@@ -55,6 +62,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
-		<RouterProvider router={router} />
+		<Provider store={store}>
+			<RouterProvider router={router} />
+		</Provider>
 	</StrictMode>
 );

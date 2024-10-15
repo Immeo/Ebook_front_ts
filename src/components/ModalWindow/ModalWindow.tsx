@@ -4,7 +4,7 @@ import Registration from '../../pages/Auth/Registration';
 import { IModalWindowProps } from './ModalWindow.props';
 
 function ModalWindow({ isOpen, isSetOpen }: IModalWindowProps) {
-	const [isDefaultModalAuth, setIsDefaultModalAuth] = useState<boolean>(false);
+	const [isDefaultModalAuth, setIsDefaultModalAuth] = useState<boolean>(true);
 
 	const onToggleModalAuth = () => {
 		setIsDefaultModalAuth(!isDefaultModalAuth);
@@ -22,9 +22,9 @@ function ModalWindow({ isOpen, isSetOpen }: IModalWindowProps) {
 				className={`p-6 rounded-sm h-400px h-400px`}
 			>
 				<div className='bg-white p-6 rounded-sm'>
-					<div>{isDefaultModalAuth ? <Registration /> : <Login />}</div>
+					<div>{isDefaultModalAuth ? <Login /> : <Registration />}</div>
 					<div>
-						{isDefaultModalAuth ? 'Нет аккаунта?' : 'Уже есть аккаунт?'}
+						{isDefaultModalAuth ? 'Нет аккаунта? ' : 'Уже есть аккаунт? '}
 						<button
 							type='button'
 							className='text-blue-600 hover:underline'
