@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import CloseSvgIcon from '../../assets/icons/closeSvgIcon';
 import Login from '../../pages/Auth/Logih';
 import Registration from '../../pages/Auth/Registration';
 import { IModalWindowProps } from './ModalWindow.props';
@@ -22,6 +23,11 @@ function ModalWindow({ isOpen, isSetOpen }: IModalWindowProps) {
 				className={`p-6 rounded-sm h-400px h-400px`}
 			>
 				<div className='bg-white p-6 rounded-sm'>
+					<div className='flex justify-end mb-4'>
+						<button type='button' onClick={() => isSetOpen(false)}>
+							<CloseSvgIcon />
+						</button>
+					</div>
 					<div>{isDefaultModalAuth ? <Login /> : <Registration />}</div>
 					<div>
 						{isDefaultModalAuth ? 'Нет аккаунта? ' : 'Уже есть аккаунт? '}
