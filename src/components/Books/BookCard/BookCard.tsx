@@ -1,8 +1,16 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import FavoriteSvgIcon from '../../../assets/icons/FavoriteSvgIcon';
 import Rating from '../../Rating/Rating';
 import { IBookCardProps } from './IBookCard.props';
 
 function BookCard({ data, error, isLoadingData }: IBookCardProps) {
+	const [isItemFavorited, setIsItemFavorited] = useState<boolean>(false);
+
+	const onFavorite = () => {
+		setIsItemFavorited(!isItemFavorited);
+	};
+
 	return (
 		<>
 			{isLoadingData && <div className='text-center text-2xl'>Загрузка...</div>}
@@ -17,10 +25,15 @@ function BookCard({ data, error, isLoadingData }: IBookCardProps) {
 							<img
 								src={book.cover_image_path}
 								width='200px'
-								className='h-full w-full rounded-lg object-cover object-center shadow-lg duration-300 group-hover:scale-110 md:w-52'
+								className='h-full w-full rounded-lg object-fill shadow-lg duration-300 group-hover:scale-110 md:w-52 sm:w-32'
 								height='200px'
 								alt='Обложка книги'
 							/>
+							<button type='button' className='relative' onClick={onFavorite}>
+								<span className='absolute bottom-[300px] left-[120px]'>
+									<FavoriteSvgIcon color={isItemFavorited ? 'red' : 'black'} />
+								</span>
+							</button>
 						</div>
 						<div className='w-full p-5 pb-10'>
 							<h2 className='mt-4 text-2xl font-semibold'>
@@ -58,7 +71,16 @@ function BookCard({ data, error, isLoadingData }: IBookCardProps) {
 											{!isLoadingData && (
 												<span className='flex gap-2 items-center text-lg'>
 													Рейтинг:
-													<Rating count={5} value={book.rate[0].rating} />
+													<Rating
+														count={5}
+														value={
+															book.rate &&
+															book.rate.length > 0 &&
+															book.rate[0].rating > 0
+																? book.rate[0].rating
+																: 0
+														}
+													/>
 												</span>
 											)}
 										</div>
