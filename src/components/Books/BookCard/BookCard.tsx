@@ -1,13 +1,27 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import FavoriteSvgIcon from '../../../assets/icons/FavoriteSvgIcon';
+import {
+	addFavorite,
+	IBookFavorite,
+	removeFavorite
+} from '../../../store/favorite.slice';
+import { AppDispatch } from '../../../store/store';
 import Rating from '../../Rating/Rating';
 import { IBookCardProps } from './IBookCard.props';
 
 function BookCard({ data, error, isLoadingData }: IBookCardProps) {
+	const dispatch = useDispatch<AppDispatch>();
 	const [isItemFavorited, setIsItemFavorited] = useState<boolean>(false);
 
-	const onFavorite = () => {
+	const onFavorite = (book: IBookFavorite) => {
+		if (isItemFavorited) {
+			dispatch(removeFavorite(book.book_slug));
+		} else {
+			dispatch(addFavorite(book));
+			console.log(book);
+		}
 		setIsItemFavorited(!isItemFavorited);
 	};
 
@@ -29,7 +43,11 @@ function BookCard({ data, error, isLoadingData }: IBookCardProps) {
 								height='200px'
 								alt='Обложка книги'
 							/>
-							<button type='button' className='relative' onClick={onFavorite}>
+							<button
+								type='button'
+								className='relative'
+								onClick={() => onFavorite(book)}
+							>
 								<span className='absolute bottom-[300px] left-[120px]'>
 									<FavoriteSvgIcon color={isItemFavorited ? 'red' : 'black'} />
 								</span>
@@ -78,7 +96,7 @@ function BookCard({ data, error, isLoadingData }: IBookCardProps) {
 															book.rate.length > 0 &&
 															book.rate[0].rating > 0
 																? book.rate[0].rating
-																: 0
+																: 1
 														}
 													/>
 												</span>

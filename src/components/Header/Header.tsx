@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 import { logout } from '../../store/auth.slice';
-import { AppDispatch } from '../../store/store';
+import { AppDispatch, RootState } from '../../store/store';
 import { clearUserInfo, selectUserName } from '../../store/user.slice';
 import { IHeaderProps } from './Header.props';
 
@@ -13,6 +13,8 @@ const Header = memo(function Header({
 	const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
 	const location = useLocation();
 	const userName = useSelector(selectUserName);
+	const favorites = useSelector((state: RootState) => state.favorite.favorites);
+	const favoritesCount = favorites.length;
 	const dispatch = useDispatch<AppDispatch>();
 
 	const onLogout = () => {
@@ -98,14 +100,21 @@ const Header = memo(function Header({
 								</li>
 							</ul>
 						</li>
-						<li>
-							<NavLink
-								className='translate-x-1 cursor-pointer text-2xl text-main-color duration-100 hover:text-hover-main-color'
-								to='/favorites'
-							>
-								Избранное
-							</NavLink>
-						</li>
+						{userName && (
+							<li>
+								<NavLink
+									className='translate-x-1 cursor-pointer text-2xl flex gap-2 text-main-color duration-100 hover:text-hover-main-color'
+									to='/favorites'
+								>
+									Избранное{' '}
+									{favoritesCount > 0 && (
+										<span className='rounded-full bg-bg-action w-7 h-7 flex items-center justify-center text-main-color'>
+											{favoritesCount}
+										</span>
+									)}
+								</NavLink>
+							</li>
+						)}
 					</ul>
 				</nav>
 			</div>
