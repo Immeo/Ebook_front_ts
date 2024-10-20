@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import FavoriteSvgIcon from '../../../assets/icons/FavoriteSvgIcon';
 import {
@@ -7,22 +7,34 @@ import {
 	IBookFavorite,
 	removeFavorite
 } from '../../../store/favorite.slice';
-import { AppDispatch } from '../../../store/store';
+import { AppDispatch, RootState } from '../../../store/store';
 import Rating from '../../Rating/Rating';
 import { IBookCardProps } from './IBookCard.props';
 
 function BookCard({ data, error, isLoadingData }: IBookCardProps) {
 	const dispatch = useDispatch<AppDispatch>();
+	const favorites = useSelector((state: RootState) => state.favorite.favorites);
 	const [isItemFavorited, setIsItemFavorited] = useState<boolean>(false);
+
+	useEffect(() => {
+		const checkIfFavorited = () => {
+			if (data && data.length > 0) {
+				const isFavorited = favorites.some(
+					favorite => favorite.book_slug === data[0].book_slug // Если books - массив, используйте index
+				);
+				setIsItemFavorited(isFavorited);
+			}
+		};
+		checkIfFavorited();
+	}, [favorites, data]); // следим за изменениями favorites и data
 
 	const onFavorite = (book: IBookFavorite) => {
 		if (isItemFavorited) {
 			dispatch(removeFavorite(book.book_slug));
 		} else {
 			dispatch(addFavorite(book));
-			console.log(book);
 		}
-		setIsItemFavorited(!isItemFavorited);
+		setIsItemFavorited(!isItemFavorited); // обновляем состояние здесь
 	};
 
 	return (
