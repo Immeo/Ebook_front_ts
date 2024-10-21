@@ -8,11 +8,13 @@ import {
 	removeFavorite
 } from '../../../store/favorite.slice';
 import { AppDispatch, RootState } from '../../../store/store';
+import { selectUserName } from '../../../store/user.slice';
 import Rating from '../../Rating/Rating';
 import { IBookCardProps } from './IBookCard.props';
 
 function BookCard({ data, error, isLoadingData }: IBookCardProps) {
 	const dispatch = useDispatch<AppDispatch>();
+	const userName = useSelector(selectUserName);
 	const favorites = useSelector((state: RootState) => state.favorite.favorites);
 	const [isItemFavorited, setIsItemFavorited] = useState<boolean>(false);
 
@@ -55,15 +57,19 @@ function BookCard({ data, error, isLoadingData }: IBookCardProps) {
 								height='200px'
 								alt='Обложка книги'
 							/>
-							<button
-								type='button'
-								className='relative'
-								onClick={() => onFavorite(book)}
-							>
-								<span className='absolute bottom-[300px] left-[120px]'>
-									<FavoriteSvgIcon color={isItemFavorited ? 'red' : 'black'} />
-								</span>
-							</button>
+							{userName && (
+								<button
+									type='button'
+									className='relative'
+									onClick={() => onFavorite(book)}
+								>
+									<span className='absolute bottom-[300px] left-[120px]'>
+										<FavoriteSvgIcon
+											color={isItemFavorited ? 'red' : 'black'}
+										/>
+									</span>
+								</button>
+							)}
 						</div>
 						<div className='w-full p-5 pb-10'>
 							<h2 className='mt-4 text-2xl font-semibold'>
