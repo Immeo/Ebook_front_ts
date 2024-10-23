@@ -16,27 +16,35 @@ function BookCard({ data, error, isLoadingData }: IBookCardProps) {
 	const dispatch = useDispatch<AppDispatch>();
 	const userName = useSelector(selectUserName);
 	const favorites = useSelector((state: RootState) => state.favorite.favorites);
-	const [isItemFavorited, setIsItemFavorited] = useState<boolean>(false);
+	const [IsFavoritedBooks, setIsFavoritedBooks] = useState<{
+		[slug: string]: boolean;
+	}>({});
 
 	useEffect(() => {
-		const checkIfFavorited = () => {
+		const initializeFavoriteStatus = () => {
 			if (data && data.length > 0) {
-				const isFavorited = favorites.some(
-					favorite => favorite.book_slug === data[0].book_slug // Если books - массив, используйте index
-				);
-				setIsItemFavorited(isFavorited);
+				const updatedStatus: { [slug: string]: boolean } = {};
+				data.forEach(book => {
+					updatedStatus[book.book_slug] = favorites.some(
+						favorite => favorite.book_slug === book.book_slug
+					);
+				});
+				setIsFavoritedBooks(updatedStatus);
 			}
 		};
-		checkIfFavorited();
-	}, [favorites, data]); // следим за изменениями favorites и data
+		initializeFavoriteStatus();
+	}, [favorites, data]);
 
 	const onFavorite = (book: IBookFavorite) => {
-		if (isItemFavorited) {
+		if (IsFavoritedBooks[book.book_slug]) {
 			dispatch(removeFavorite(book.book_slug));
 		} else {
 			dispatch(addFavorite(book));
 		}
-		setIsItemFavorited(!isItemFavorited); // обновляем состояние здесь
+		setIsFavoritedBooks(prevState => ({
+			...prevState,
+			[book.book_slug]: !prevState[book.book_slug]
+		})); // обновляем состояние избранного для конкретной книги
 	};
 
 	return (
@@ -65,7 +73,7 @@ function BookCard({ data, error, isLoadingData }: IBookCardProps) {
 								>
 									<span className='absolute bottom-[300px] left-[120px]'>
 										<FavoriteSvgIcon
-											color={isItemFavorited ? 'red' : 'black'}
+											color={IsFavoritedBooks[book.book_slug] ? 'red' : 'black'}
 										/>
 									</span>
 								</button>
