@@ -71,7 +71,7 @@ function BookCard({ data, error, isLoadingData }: IBookCardProps) {
 									className='relative'
 									onClick={() => onFavorite(book)}
 								>
-									<span className='absolute bottom-[300px] left-[120px]'>
+									<span className='absolute bottom-64 left-[120px]'>
 										<FavoriteSvgIcon
 											color={IsFavoritedBooks[book.book_slug] ? 'red' : 'black'}
 										/>
@@ -79,10 +79,8 @@ function BookCard({ data, error, isLoadingData }: IBookCardProps) {
 								</button>
 							)}
 						</div>
-						<div className='w-full p-5 pb-10'>
-							<h2 className='mt-4 text-2xl font-semibold'>
-								{book.title_books}
-							</h2>
+						<div className='w-full p-5 pb-10 overflow-ellipsis whitespace-nowrap'>
+							<h2 className='mt-4 text-lg font-semibold'>{book.title_books}</h2>
 							<Link
 								to={`/authors/${book.author_books.authors_slug}`}
 								className='mt-2 text-lg text-main-color hover:text-hover-main-color'

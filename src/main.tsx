@@ -7,6 +7,7 @@ import BookDetalis from './components/Books/BookDetais/BookDetalis';
 import BookList from './components/Books/BookList';
 import BooksByAuthor from './components/Books/BooksByAuthor/BooksByAuthor';
 import BooksByGenre from './components/Books/BooksByGenre/BooksByGenre.';
+import BooksFavorites from './components/Books/BooksFavorites/BooksFavorites';
 import BooksPublishers from './components/Books/BooksPublishers/BooksPublishers';
 import GenreList from './components/Genre/GenreList';
 import PublishersList from './components/Publishers/PublishersList';
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
 			{
 				path: 'book/:slug',
 				element: <BookDetalis />
+			},
+			{
+				path: '/favorites',
+				element: <BooksFavorites />
 			}
 		]
 	}
