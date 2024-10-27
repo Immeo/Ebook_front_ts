@@ -40,7 +40,7 @@ function Layout() {
 
 	return (
 		<div className='flex min-h-screen flex-col'>
-			<div className='mb-10'>
+			<div className='mb-10 z-20'>
 				<Header
 					setIsOpenModalAuth={setIsOpenModalAuth}
 					isOpenModalAuth={isOpenModalAuth}
@@ -49,7 +49,7 @@ function Layout() {
 			<div>
 				<ModalWindow isOpen={isOpenModalAuth} isSetOpen={setIsOpenModalAuth} />
 			</div>
-			<div className='flex-1'>
+			<div className='flex-1 z-10'>
 				<Outlet />
 			</div>
 		</div>
