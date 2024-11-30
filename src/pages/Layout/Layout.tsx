@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
+import CarouselTopRating from '../../components/Books/CarouselTopRating/CarouselTopRating';
 import Header from '../../components/Header/Header';
 import ModalWindow from '../../components/ModalWindow/ModalWindow';
 import { loginSuccess } from '../../store/auth.slice';
@@ -49,8 +50,13 @@ function Layout() {
 			<div>
 				<ModalWindow isOpen={isOpenModalAuth} isSetOpen={setIsOpenModalAuth} />
 			</div>
-			<div className='flex-1 z-10'>
-				<Outlet />
+			<div className='flex'>
+				<div className='shrink-1 w-80 h-80'>
+					<CarouselTopRating />
+				</div>
+				<div className='flex-1 z-10'>
+					<Outlet />
+				</div>
 			</div>
 		</div>
 	);
