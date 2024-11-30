@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import CloseSvgIcon from '../../assets/icons/closeSvgIcon';
+import CloseSvgIcon from '../../assets/icons/CloseSvgIcon';
 import Login from '../../pages/Auth/Logih';
 import Registration from '../../pages/Auth/Registration';
 import { IModalWindowProps } from './ModalWindow.props';
@@ -14,7 +14,7 @@ function ModalWindow({ isOpen, isSetOpen }: IModalWindowProps) {
 	return (
 		<div
 			className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 translate-x-2 ${
-				isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+				isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none hidden'
 			}`}
 			onClick={() => isSetOpen(false)}
 		>
