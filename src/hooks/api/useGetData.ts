@@ -2,16 +2,16 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { PREFIX } from '../../helpering/Api/PREFIX';
 
-export const useGetData = (whatsData: string) => {
-	const [data, setData] = useState([]);
-	const [error, setError] = useState(null);
+export const useGetData = <T>(whatsData: string) => {
+	const [data, setData] = useState<T | null>(null);
+	const [error, setError] = useState<string | null>(null);
 	const [isLoadingData, setIsLoadingData] = useState(false);
 
 	const getData = async () => {
 		try {
 			setIsLoadingData(true);
 			await new Promise(resolve => setTimeout(resolve, 1000));
-			const response = await axios.get(`${PREFIX}${whatsData}/`, {
+			const response = await axios.get<T>(`${PREFIX}${whatsData}/`, {
 				withCredentials: false
 			});
 			setData(response.data);

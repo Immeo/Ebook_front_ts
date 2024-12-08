@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { IPublishersCard } from './IPublishers.props';
+import { IPublishersCard } from '../IPublishers.props';
 
 function PublishersCard(data: IPublishersCard) {
 	return (

@@ -1,26 +1,28 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useGetData } from '../../../hooks/api/useGetData';
-import Rating from '../../Rating/Rating';
+import { useGetData } from '../../hooks/api/useGetData';
+import Rating from '../Rating/Rating';
 
-interface CarouselTopRatingProps {
-	data: {
-		book_slug: string;
-		cover_image_path: string;
-		average_rating: number;
-	}[];
+interface Book {
+	book_slug: string;
+	cover_image_path: string;
+	average_rating: number;
+}
+
+interface CarouselTopRatingData {
+	data: Book[] | null; // Здесь мы указываем, что data может быть null
+	error: string | null;
+	isLoadingData: boolean;
 }
 
 function CarouselTopRating() {
-	const {
-		data,
-		error,
-		isLoadingData
-	}: { data: CarouselTopRatingProps['data'] } = useGetData('top-rating'); // замените "top-rating" на нужный вам адрес
-	const [currentIndex, setCurrentIndex] = useState(0); // Создаем состояние для currentIndex
+	const { data, error, isLoadingData }: CarouselTopRatingData =
+		useGetData('top-rating');
+
+	const [currentIndex, setCurrentIndex] = useState(0);
 
 	useEffect(() => {
-		if (data.length > 0) {
+		if (data && data.length > 0) {
 			const interval = setInterval(() => {
 				setCurrentIndex(prevIndex => (prevIndex + 1) % data.length);
 			}, 3000); // Показ книги каждые 3 секунды
@@ -29,17 +31,20 @@ function CarouselTopRating() {
 		}
 	}, [data]);
 
-	const sortedBooks = [...data].sort(
-		(a, b) => b.average_rating - a.average_rating
-	);
-
+	const sortedBooks = data
+		? [...data].sort((a, b) => b.average_rating - a.average_rating)
+		: [];
 	const currentBook = sortedBooks[currentIndex];
 
 	return (
 		<div className='flex justify-center items-center h-full'>
-			{error && <div>{error}</div>}
+			{error && <div className='text-red-500'>{error}</div>}
+			{isLoadingData && <div>Загрузка...</div>}
+			{!isLoadingData && data && data.length === 0 && (
+				<div>Нет доступных книг.</div>
+			)}
 			{!isLoadingData && currentBook && (
-				<div className='min-w-[300px] bg-white rounded-lg shadow-md p-2 mx-2 transition-opacity duration-500'>
+				<div className='max-w-[300px] bg-white rounded-lg shadow-md p-2 mx-2 transition-opacity duration-500'>
 					<Link to={`/book/${currentBook.book_slug}`}>
 						<img
 							src={currentBook.cover_image_path}

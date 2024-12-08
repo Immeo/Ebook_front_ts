@@ -7,3 +7,5 @@ export interface IPublishers {
 	publishers_slug: string;
 	publishers_id: number;
 }
+
+export type TPublishersListProps = IPublishers[];

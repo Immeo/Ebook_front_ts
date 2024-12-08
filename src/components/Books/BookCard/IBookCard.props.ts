@@ -1,11 +1,9 @@
-import { IAuthor } from '../../Authors/AuthorCard/IAuthorsCard.props';
+import { IAuthor } from '../../Authors/IAuthorCard.props';
 import { IGrenre } from '../../Genre/GenreCard/IIGenresCard.props';
-import { IPublishers } from '../../Publishers/PublishersCard/IPublishers.props';
+import { IPublishers } from '../../Publishers/IPublishers.props';
 
 export interface IBookCardProps {
-	data: IBookProps[];
-	error: string | null;
-	isLoadingData: boolean;
+	data: IBookProps;
 }
 
 export interface IBookProps {

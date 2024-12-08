@@ -7,3 +7,5 @@ export interface IGrenre {
 	genres_name: string;
 	genres_slug: string;
 }
+
+export type TGrenreListProps = IGrenre[];

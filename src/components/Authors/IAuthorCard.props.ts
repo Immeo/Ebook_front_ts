@@ -6,5 +6,11 @@ export interface IAuthor {
 }
 
 export interface IAuthorCardProps {
-	data: IAuthor[];
+	data: IAuthor[] | null;
+}
+
+export interface IAuthorListProps {
+	data: IAuthor[] | null;
+	error: string | null;
+	isLoadingData: boolean;
 }
