@@ -8,7 +8,7 @@ import { fetchUser } from '../../store/user.slice';
 function Login() {
 	const dispatch = useDispatch<AppDispatch>();
 	const navigate = useNavigate();
-	const { token, isLoading, error, isSuccess } = useSelector(
+	const { token, isLoading, error, isSuccessLogin } = useSelector(
 		(state: RootState) => state.auth
 	);
 
@@ -27,11 +27,11 @@ function Login() {
 	};
 
 	useEffect(() => {
-		if (isSuccess && token) {
+		if (isSuccessLogin && token) {
 			localStorage.setItem('access_token', token); // Сохраняем токен
 			dispatch(fetchUser(token));
 		}
-	}, [isSuccess, token, navigate]);
+	}, [isSuccessLogin, token, navigate]);
 
 	return (
 		<div>
@@ -52,11 +52,11 @@ function Login() {
 					<input
 						type='text'
 						name='costum_users_name'
-						id='email'
+						id='login'
 						value={formData.costum_users_name}
 						onChange={onChangeInput}
 						className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-						placeholder='name@mail.ru'
+						placeholder='Логин'
 					/>
 				</div>
 				<div>
