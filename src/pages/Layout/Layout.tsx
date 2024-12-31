@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 import CarouselTopRating from '../../components/CarouselTopRating/CarouselTopRating';
+import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import ModalWindow from '../../components/ModalWindow/ModalWindow';
 import { loginSuccess } from '../../store/auth.slice';
@@ -57,6 +58,9 @@ function Layout() {
 				<div className='flex-1 z-10'>
 					<Outlet />
 				</div>
+			</div>
+			<div className='mt-auto border-t-2 border-t-border-color'>
+				<Footer />
 			</div>
 		</div>
 	);
