@@ -1,8 +1,32 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import FavoriteSvgIcon from '../../../../assets/icons/FavoriteSvgIcon';
+import {
+	addFavorite,
+	IBookFavorite,
+	removeFavorite
+} from '../../../../store/favorite.slice';
+import { AppDispatch, RootState } from '../../../../store/store';
+import { selectUserName } from '../../../../store/user.slice';
 import Rating from '../../../Rating/Rating';
 import { IBookDetalisCardProps } from '../BookDetalis.props';
 
 function BookDetalisCard({ data, onDowload, onRead }: IBookDetalisCardProps) {
+	const dispatch = useDispatch<AppDispatch>();
+	const userName = useSelector(selectUserName);
+	const favorites = useSelector((state: RootState) => state.favorite.favorites);
+
+	const isFavorited = favorites.some(
+		favorite => favorite.book_slug === data.book_slug
+	);
+
+	const onFavorite = (book: IBookFavorite) => {
+		if (isFavorited) {
+			dispatch(removeFavorite(book.book_slug));
+		} else {
+			dispatch(addFavorite(book));
+		}
+	};
 	if (data === null) {
 		return null;
 	}
@@ -26,6 +50,23 @@ function BookDetalisCard({ data, onDowload, onRead }: IBookDetalisCardProps) {
 								src={data.cover_image_path}
 								alt={`Обложка книги ${data.title_books}`}
 							/>
+							<div>
+								{userName && (
+									<button
+										type='button'
+										className='relative'
+										onClick={() => onFavorite(data)}
+									>
+										<span className='absolute bottom-[27rem] left-[20rem]'>
+											<FavoriteSvgIcon
+												color={isFavorited ? 'red' : 'black'}
+												height={40}
+												width={40}
+											/>
+										</span>
+									</button>
+								)}
+							</div>
 						</div>
 						<div className='-mx-2 mb-4 flex'>
 							<div className='w-1/2 px-2'>
